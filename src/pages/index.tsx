@@ -55,10 +55,13 @@ export default function Home() {
       && board[1][1] == board[2][0])
       setWinner(board[0][2]);
 
-    if (moves == 9) {
+  }, [board])
+
+  useEffect(() => {
+    if (winner == '*' && moves == 9) {
       restart();
     }
-  }, [board])
+  }, [winner, moves])
 
   useEffect(() => {
     checkForWin();
