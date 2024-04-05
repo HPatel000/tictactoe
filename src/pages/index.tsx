@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const [moves, setMoves] = useState(0);
   const [currTurn, setCurrTurn] = useState('X');
   const [winner, setWinner] = useState('*');
   const [board, setboard] = useState([['*', '*', '*'], ['*', '*', '*'], ['*', '*', '*']]);
@@ -17,6 +18,7 @@ export default function Home() {
     setboard(newBoard)
     if (currTurn == 'X') setCurrTurn('O');
     else setCurrTurn('X')
+    setMoves(prev => prev + 1);
   }
 
   const checkForWin = useCallback(() => {
@@ -52,6 +54,10 @@ export default function Home() {
       && board[0][2] == board[1][1]
       && board[1][1] == board[2][0])
       setWinner(board[0][2]);
+
+    if (moves == 9) {
+      restart();
+    }
   }, [board])
 
   useEffect(() => {
@@ -62,6 +68,7 @@ export default function Home() {
     setboard([['*', '*', '*'], ['*', '*', '*'], ['*', '*', '*']]);
     setWinner('*');
     setCurrTurn('X');
+    setMoves(0);
   }
   return (
     <>
